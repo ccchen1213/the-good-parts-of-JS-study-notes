@@ -1,5 +1,5 @@
 * Function as module
-```
+```javascript
 (function() {
 	var ...
 	function ...
@@ -15,7 +15,7 @@
 	* Augment the object with privileged methods.
 	* Return the object.
 
-```
+```javascript
 // step one
 function constructor(spec) {
 	var that = otherMaker(spec),

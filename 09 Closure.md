@@ -5,7 +5,7 @@
 	* Reference: https://www.youtube.com/watch?v=beZfCfiuIkA
 
 * Example 1: Private variables
-```
+```javascript
 function outer(){ 
 	const message = "Hello"; 
 	
@@ -22,7 +22,7 @@ outer();
 ```
 
 * Example 2: State maintenance
-```
+```javascript
 function createCounter() { 
 	let count = 0; 
 	
@@ -48,7 +48,7 @@ console.log(`Current count: ${counter.getCount()}`);
 ```
 
 * Example 3: State maintenance
-```
+```javascript
 function createGame(){ 
 	let score = 0; 
 	
@@ -79,7 +79,7 @@ console.log(`The final score is ${game.getScore()}pts`);
 ```
 
 Original Version:
-```
+```javascript
 var names = [
 	'zero', 'one', 'two', 'three',
 	'four', 'five', 'six', 'seven',
@@ -93,8 +93,8 @@ var digit_name = function(n) {
 alert(digit_names(3)); // 'three'
 ```
 
-Closure Version: 
-```
+[[Closure]] Version: 
+```javascript
 var digit_name = (function () {
 	var names = [
 		'zero', 'one', 'two', 'three',
