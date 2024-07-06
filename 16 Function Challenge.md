@@ -201,3 +201,100 @@ function limit(fn, times) {
 	};
 }
 ```
+
+#### Function 12
+```javascript
+// Write a from function that produces a generator that will produce a series of values.
+// var index = from(0);
+// index() // 0
+// index() // 1
+// index() // 2
+function from(start) {
+	return function() {
+		var next = start;
+		start += 1;
+		return next;
+	};
+}
+// return x++ will change the value of x
+```
+
+#### Function 13
+```javascript
+// Write a to function that takes a generator and an end value, and returns a generator that will produce numbers up to that limit.
+// var index = to(from(1), 3);
+// index() -> 1
+// index() -> 2
+// index() -> undefined
+function to(fn, end) {
+	return function(){
+		let now = fn();
+		if(now < end) {
+			return now;
+		}
+		return undefined;
+	};
+}
+```
+
+#### Function 14
+```javascript
+// Write a fromTo function that produces a generator that will produce values in a range.
+// var index = fromTo(0, 3);
+// index() -> 0
+// index() -> 1
+// index() -> 2
+// index() -> undefined
+function fromTo(start, end) {
+	let now = from(start);
+	return now < end ? now : undefined;
+}
+
+// LET THE FUNCTIONS DO THE WORK!
+function fromTo(start, end) {
+	return to(from(start), end);
+}
+```
+
+#### Function 15
+```javascript
+// Write an element function that takes an array and a generator and returns a generator that will produce elements from the array.
+// var ele = element(['a', 'b', 'c', 'd'], fromTo(1,3));
+// ele() -> 'b'
+// ele() -> 'c'
+// ele() -> 'undefined'
+function element(array, fn) {
+	return function() {
+		let index = fn();
+		if(index !== undefined) {
+			return array[index];
+		}
+	};
+}
+```
+If we delete the if, it still works. When index = undefined, it will find the property string 'undefined' in array, if array doesn't have the value of 'undefined', then it will return undefined.
+**But if we said `array.undefined = 5`, then in that case it will return 5 instead of `undefined`.**
+
+#### Function 16
+```javascript
+// Modify the element function so that the generator argument is optional. If a generator is not provided, then each of the elements of the array will be produced.
+// var ele = element(['a', 'b', 'c', 'd'])
+// ele() -> 'a'
+// ele() -> 'b'
+// ele() -> 'c'
+// ele() -> 'd'
+// ele() -> 'undefined'
+function element(array, fn) {
+	if(fn === undefined) {
+		// LET THE FUNCTIONS DO THE WORK!
+		fn = fromTo(0, array.length);
+	}
+	return function() {
+		let index = fn();
+		if(index !== undefined) {
+			return array[index];
+		}
+	}
+}
+
+```
