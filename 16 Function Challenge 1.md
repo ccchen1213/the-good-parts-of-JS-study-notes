@@ -129,7 +129,7 @@ inc = curry(add, 1);
 inc = liftf(add)(1);
 // A3
 inc = addf(1);
-``` 
+```
 **Functional Programming Rule 1**: Let the function do the work. If you've already written a function that does what you need, you don't need to write another one.
 
 #### Function 7: Twice
@@ -297,4 +297,85 @@ function element(array, fn) {
 	}
 }
 
+```
+
+#### Function 17
+```javascript
+// Write a collect function that takes a generator and an array and produces a function that will collect the results in the array.
+var array = [], col = collect(fromTo(0, 2), array);
+col() // 0
+col() // 1
+col() // undefined
+array // [0, 1]
+
+function collect(gen, array) {
+	return function() {
+		var value = gen();
+		if(value !== undefined) {
+			array.push(value);
+		}
+		return value;
+	};
+}
+```
+
+#### Function 18
+```javascript
+// Write a filter function that takes a generator and a predicate anf produces a generator that produces only the values approved by the predicate.
+var fil = filter(fromTo(0, 5),
+	function third(value) {
+		return (value % 3) === 0;
+	}
+);
+
+fil() // 0
+fil() // 3
+fil() // undefined
+
+// loop
+function filter(gen, fn) {
+	return function() {
+		var value;
+	 do {
+		 value = gen();
+	 } while {
+		 value !== undefined && !fn(value)
+	 };
+	 return value;
+	};
+}
+// recursion
+function filter(gen, fn) {
+	return function recur() {
+		let value = gen();
+		if(fn === undefined || fn(value)) {
+			return value;
+		}
+		return recur();
+	};
+}
+```
+
+#### Function 19
+```javascript
+// Write a concat function that takes two generators and produces a generator that combines the sequences.
+var con = concat(fromTo(0, 3), fromTo(0, 2));
+con() // 0
+con() // 1
+con() // 2
+con() // 0
+con() // 1
+con() // undefined
+
+function concat(gen1, gen2) {
+	var gen = gen1;
+	return function() {
+		var value = gen();
+		if(value !== undefined) {
+			return value;
+		}
+		gen = gen2;
+		return gen();
+	};
+}
 ```
